@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cuentas")
@@ -26,8 +27,16 @@ public class UsersController {
     public List<Users> getAll(){return service.getAll();}
 
 
-    @PostMapping({"crearUsuario"})
-    public void save (@RequestBody Users users) {this.service.save(users);}
+    @PostMapping("/crearUsuario")
+    public ResponseEntity<?> registerUser(@RequestBody Users userRequest) {
+        try {
+            Users savedUser = service.save(userRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+        }
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Users userRequest) {

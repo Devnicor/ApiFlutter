@@ -25,7 +25,7 @@ public class Bank {
     private String tipo;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private Users user;
 
 }

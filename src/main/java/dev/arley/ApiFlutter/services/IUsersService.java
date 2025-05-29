@@ -8,7 +8,7 @@ public interface IUsersService {
 
     List<Users> getAll();
 
-    void save (Users users);
+    Users save (Users users);
 
 
     Users getById(Long id);

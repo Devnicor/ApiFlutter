@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/banks")
@@ -33,9 +34,13 @@ public class BankController {
     }
 
     @PostMapping("/crearCuenta")
-    public ResponseEntity<String> save(@RequestBody Bank bank) {
-        service.save(bank);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cuenta bancaria creada con éxito");
+    public ResponseEntity<?> save(@RequestBody Bank bank) {
+        try {
+            Bank savedBank = service.save(bank); // Guardar la cuenta en la base de datos
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedBank);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+        }
     }
 
 

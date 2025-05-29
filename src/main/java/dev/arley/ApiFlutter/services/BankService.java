@@ -1,7 +1,9 @@
 package dev.arley.ApiFlutter.services;
 
 import dev.arley.ApiFlutter.entities.Bank;
+import dev.arley.ApiFlutter.entities.Users;
 import dev.arley.ApiFlutter.repository.BankRepository;
+import dev.arley.ApiFlutter.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,15 @@ public class BankService implements IBankService {
     @Autowired
     private BankRepository repository;
 
-    public void save(Bank bank){this.repository.save(bank);}
+    @Autowired
+    private UsersRepository usersRepository;
+
+    @Override
+    public Bank save(Bank bank) {
+
+        return repository.save(bank);
+    }
+
 
     @Override
     public List<Bank> getAll(){return (List<Bank>) repository.findAll();}

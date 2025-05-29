@@ -8,7 +8,7 @@ public interface IBankService {
 
     List<Bank> getAll();
 
-    void save (Bank bank);
+    Bank save (Bank bank);
 
     Bank getByNumeroCuenta(String numeroCuenta);
 

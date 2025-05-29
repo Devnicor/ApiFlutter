@@ -12,7 +12,9 @@ public class UsersService implements IUsersService{
     @Autowired
     private UsersRepository repository;
 
-    public void save(Users users){this.repository.save(users);}
+    public Users save(Users users){this.repository.save(users);
+        return users;
+    }
 
     @Override
     public List<Users> getAll(){return (List<Users>) repository.findAll();}
