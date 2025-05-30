@@ -1,5 +1,6 @@
 package dev.arley.ApiFlutter.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,4 +25,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Bank> cuentas;
+
+    @JsonProperty("cuenta") // Evita enviar una lista en el JSON
+    public Bank getCuenta() {
+        return cuentas != null && !cuentas.isEmpty() ? cuentas.get(0) : null;
+    }
 }

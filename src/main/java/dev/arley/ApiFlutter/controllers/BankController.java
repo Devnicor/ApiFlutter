@@ -45,24 +45,25 @@ public class BankController {
 
 
     @PutMapping("/{numeroCuenta}/consignar")
-    public ResponseEntity<String> consignarSaldo(@PathVariable String numeroCuenta, @RequestParam double amount) {
-        try {
-            service.consignarSaldo(numeroCuenta, amount);
-            return ResponseEntity.ok("Saldo consignado exitosamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<String> consignarSaldo(@PathVariable String numeroCuenta, @RequestBody Map<String, Double> request) {
+        if (!request.containsKey("amount")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: El parámetro 'amount' es obligatorio.");
         }
+
+        double monto = request.get("amount");
+        service.consignarSaldo(numeroCuenta, monto);
+        return ResponseEntity.ok("Saldo consignado correctamente");
     }
 
-
     @PutMapping("/{numeroCuenta}/retirar")
-    public ResponseEntity<String> retirarSaldo(@PathVariable String numeroCuenta, @RequestParam double amount) {
-        try {
-            service.retirarSaldo(numeroCuenta, amount);
-            return ResponseEntity.ok("Saldo retirado exitosamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> retirarSaldo(@PathVariable String numeroCuenta, @RequestBody Map<String, Double> request) {
+        if (!request.containsKey("amount")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: El parámetro 'amount' es obligatorio.");
         }
+
+        double monto = request.get("amount");
+        service.retirarSaldo(numeroCuenta, monto);
+        return ResponseEntity.ok("Saldo retirado correctamente");
     }
 
     @DeleteMapping("/{numeroCuenta}")

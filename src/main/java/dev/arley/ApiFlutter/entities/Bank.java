@@ -1,6 +1,6 @@
 package dev.arley.ApiFlutter.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,9 +23,9 @@ public class Bank {
     private String numeroCuenta;
     private Double disponible;
     private String tipo;
+
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
 }
